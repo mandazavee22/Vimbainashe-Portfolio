@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vimbainashe Mandaza — Data Science & Informatics</title>
+<meta name="description" content="Portfolio of Vimbainashe Mandaza — Data Science & Informatics graduate, AI/ML, health informatics and financial analytics.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     DESIGN TOKENS — edit colors/fonts here, nothing else needs to change
+  ============================================================ */
+  :root{
+    --bg:        #F5F1EC;
+    --bg-alt:    #EDE3DC;
+    --surface:   #FDFBF8;
+    --ink:       #241E1F;
+    --ink-soft:  #5C534F;
+    --gold:      #BE8C42;
+    --teal:      #2F5D50;
+    --rust:      #9C4A24;
+    --blush:     #B8697A;
+    --blush-soft:#EADCDD;
+    --line:      rgba(36,30,31,0.14);
+    --line-soft: rgba(36,30,31,0.08);
+    --serif: 'Source Serif 4', Georgia, serif;
+    --sans:  'IBM Plex Sans', -apple-system, Segoe UI, Roboto, sans-serif;
+    --mono:  'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+    --maxw: 1120px;
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 22px;
+    --shadow: 0 14px 32px -18px rgba(36,30,31,0.28);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3{ font-family:var(--serif); font-weight:600; line-height:1.15; color:var(--ink); }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+  section{ padding:96px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .kicker{
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:0.02em;
+    color:var(--ink-soft);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .kicker::before{
+    content:"";
+    width:22px; height:2px;
+    background:linear-gradient(90deg, var(--gold), var(--blush));
+    border-radius:2px;
+    display:inline-block;
+  }
+
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head h2{ font-size:clamp(28px,3.4vw,38px); margin-bottom:14px; }
+  .section-head p{ color:var(--ink-soft); font-size:16px; max-width:56ch; }
+
+  /* ---------------- NAV ---------------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(245,241,236,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .brand{
+    font-family:var(--serif); font-weight:700; font-size:19px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .mono-dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--blush);
+    box-shadow:0 0 0 3px rgba(184,105,122,0.18);
+  }
+  .nav-links{ display:flex; gap:30px; }
+  .nav-links a{
+    font-size:14.5px; color:var(--ink-soft);
+    padding:4px 0; border-bottom:1px solid transparent;
+    transition:color .15s, border-color .15s;
+  }
+  .nav-links a:hover, .nav-links a.active{ color:var(--ink); border-color:var(--blush); }
+  .nav-cta{
+    font-family:var(--mono); font-size:13px;
+    background:var(--ink); color:var(--surface);
+    padding:9px 18px; border-radius:999px;
+    transition:background .15s, transform .15s;
+  }
+  .nav-cta:hover{ background:var(--blush); transform:translateY(-1px); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; }
+  .nav-toggle span{ display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; }
+
+  @media (max-width:860px){
+    .nav-links{
+      position:absolute; top:68px; left:0; right:0;
+      background:var(--surface);
+      border-bottom:1px solid var(--line);
+      flex-direction:column; gap:0;
+      max-height:0; overflow:hidden;
+      transition:max-height .25s ease;
+    }
+    .nav-links.open{ max-height:420px; }
+    .nav-links a{ padding:16px 28px; border-bottom:1px solid var(--line-soft); width:100%; }
+    .nav-cta{ display:none; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------------- HERO ---------------- */
+  #home{
+    padding-top:150px; padding-bottom:88px; border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(720px 360px at 88% -10%, rgba(190,140,66,0.14), transparent 60%),
+      radial-gradient(600px 320px at 100% 20%, rgba(184,105,122,0.12), transparent 65%);
+  }
+  .hero-grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:end;
+  }
+  .hero-top{ display:flex; align-items:center; gap:20px; margin-bottom:26px; }
+  .hero-photo{
+    width:76px; height:76px; border-radius:50%;
+    background:linear-gradient(145deg, var(--blush), var(--gold));
+    padding:3px; flex-shrink:0;
+  }
+  .hero-photo-inner{
+    width:100%; height:100%; border-radius:50%;
+    background:var(--surface);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--serif); font-size:24px; font-weight:600; color:var(--ink);
+    overflow:hidden;
+  }
+  .hero-photo-inner img{ width:100%; height:100%; object-fit:cover; }
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--teal);
+    letter-spacing:0.01em;
+  }
+  h1.hero-name{
+    font-size:clamp(38px,5.6vw,64px);
+    margin-bottom:18px;
+  }
+  .hero-role{
+    font-size:19px; color:var(--ink-soft); max-width:44ch; margin-bottom:32px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:13.5px;
+    padding:12px 24px; border-radius:999px;
+    border:1px solid var(--ink);
+    transition:background .15s, color .15s, transform .15s, border-color .15s;
+  }
+  .btn.primary{ background:var(--ink); color:var(--surface); }
+  .btn.primary:hover{ background:var(--blush); border-color:var(--blush); transform:translateY(-1px); }
+  .btn.ghost:hover{ background:var(--ink); color:var(--surface); transform:translateY(-1px); }
+
+  .signal-panel{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--r-lg);
+    padding:22px 22px 18px;
+    box-shadow:var(--shadow);
+  }
+  .signal-panel-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);
+    margin-bottom:10px; text-transform:uppercase; letter-spacing:0.06em;
+  }
+  canvas#signalCanvas{ width:100%; height:120px; display:block; }
+  .signal-readout{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    margin-top:14px; padding-top:14px; border-top:1px solid var(--line-soft);
+  }
+  .signal-value{ font-family:var(--mono); font-size:34px; color:var(--teal); font-weight:500; }
+  .signal-label{ font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); text-align:right; max-width:150px; }
+
+  @media (max-width:860px){
+    .hero-grid{ grid-template-columns:1fr; }
+  }
+
+  /* ---------------- ABOUT ---------------- */
+  .about-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:60px; }
+  .about-text p{ color:var(--ink-soft); margin-bottom:16px; max-width:60ch; }
+  .about-text p strong{ color:var(--ink); font-weight:600; }
+  .facts{ border-top:1px solid var(--line); }
+  .facts dl{ display:grid; grid-template-columns:auto 1fr; gap:12px 20px; padding:20px 0; border-bottom:1px solid var(--line-soft); }
+  .facts dt{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); white-space:nowrap; padding-top:2px; }
+  .facts dd{ font-size:14.5px; }
+
+  /* ---------------- SKILLS ---------------- */
+  .skills-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+  .skill-block{
+    padding:24px 26px; border:1px solid var(--line); border-radius:var(--r-md);
+    background:var(--surface);
+  }
+  .skill-block h3{ font-size:14px; font-family:var(--mono); font-weight:500; color:var(--teal); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:14px; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    font-size:13.5px; padding:6px 13px; border-radius:999px;
+    border:1px solid var(--line);
+    background:var(--bg);
+  }
+  @media (max-width:700px){ .skills-grid{ grid-template-columns:1fr; } }
+
+  /* ---------------- PROJECTS ---------------- */
+  .project-row{
+    display:grid; grid-template-columns:200px 1fr; gap:36px;
+    padding:30px; margin-bottom:20px;
+    border:1px solid var(--line); border-radius:var(--r-lg);
+    background:var(--surface);
+    transition:box-shadow .2s, transform .2s;
+  }
+  .project-row:hover{ box-shadow:var(--shadow); transform:translateY(-2px); }
+  .project-meta{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); }
+  .tag{
+    display:inline-block; font-family:var(--mono); font-size:11px;
+    padding:5px 12px; margin-bottom:10px; border-radius:999px;
+    color:var(--surface);
+  }
+  .project-title{ font-size:23px; margin-bottom:10px; }
+  .project-desc{ color:var(--ink-soft); max-width:64ch; margin-bottom:16px; }
+  .project-tech{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+  .project-tech span{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); }
+  .project-tech span:not(:last-child)::after{ content:"·"; margin-left:7px; color:var(--line); }
+  .project-metric{
+    font-family:var(--mono); font-size:14px; color:var(--teal);
+    margin-bottom:16px; display:inline-block;
+  }
+  .project-links{ display:flex; gap:18px; }
+  .project-links a{ font-family:var(--mono); font-size:13px; border-bottom:1px solid var(--ink); padding-bottom:2px; }
+  .project-links a:hover{ color:var(--blush); border-color:var(--blush); }
+  @media (max-width:700px){
+    .project-row{ grid-template-columns:1fr; gap:10px; }
+  }
+
+  .other-work{ margin-top:28px; }
+  .other-work-item{
+    display:grid; grid-template-columns:140px 1fr; gap:20px;
+    padding:16px 0; border-top:1px solid var(--line-soft);
+    font-size:14.5px;
+  }
+  .other-work-item .ow-period{ font-family:var(--mono); font-size:12px; color:var(--ink-soft); }
+  .other-work-item .ow-name{ font-weight:600; margin-bottom:4px; }
+  .other-work-item .ow-desc{ color:var(--ink-soft); }
+  @media (max-width:700px){ .other-work-item{ grid-template-columns:1fr; gap:4px; } }
+
+  /* ---------------- TIMELINE (experience / education) ---------------- */
+  .timeline{ position:relative; padding-left:44px; }
+  .timeline::before{
+    content:""; position:absolute; left:9px; top:6px; bottom:6px;
+    width:1px; background:var(--line);
+  }
+  .tl-item{ position:relative; padding-bottom:44px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-num{
+    position:absolute; left:-44px; top:0;
+    width:20px; height:20px; border-radius:50%;
+    border:1px solid var(--ink);
+    background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--mono); font-size:10.5px;
+  }
+  .tl-period{ font-family:var(--mono); font-size:12.5px; color:var(--gold); margin-bottom:6px; }
+  .tl-role{ font-size:19px; margin-bottom:2px; }
+  .tl-org{ font-size:14.5px; color:var(--ink-soft); margin-bottom:12px; }
+  .tl-points li{ position:relative; padding-left:16px; color:var(--ink-soft); font-size:14.5px; margin-bottom:6px; max-width:64ch; }
+  .tl-points li::before{ content:"—"; position:absolute; left:0; color:var(--line); }
+
+  /* ---------------- ACHIEVEMENTS ---------------- */
+  .ach-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .ach-card{
+    background:var(--surface); padding:28px 24px;
+    border:1px solid var(--line); border-radius:var(--r-md);
+  }
+  .ach-mark{ font-family:var(--mono); font-size:12px; color:var(--rust); margin-bottom:14px; }
+  .ach-title{ font-size:16.5px; font-weight:600; margin-bottom:8px; line-height:1.35; }
+  .ach-detail{ font-size:13.5px; color:var(--ink-soft); }
+  @media (max-width:800px){ .ach-grid{ grid-template-columns:1fr; } }
+
+  /* ---------------- CERTIFICATIONS ---------------- */
+  .cert-list{ border-top:1px solid var(--line); }
+  .cert-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:18px 0; border-bottom:1px solid var(--line);
+    font-size:15.5px;
+  }
+  .cert-date{ font-family:var(--mono); font-size:13px; color:var(--ink-soft); }
+
+  /* ---------------- CREDENTIALS GALLERY (real certificate photos) ---------------- */
+  .cred-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+  .cred-card{
+    border:1px solid var(--line); border-radius:var(--r-lg);
+    background:var(--surface); overflow:hidden;
+    transition:box-shadow .2s, transform .2s;
+  }
+  .cred-card:hover{ box-shadow:var(--shadow); transform:translateY(-3px); }
+  .cred-thumb{
+    aspect-ratio:4/3; overflow:hidden; background:var(--bg-alt);
+    border-bottom:1px solid var(--line);
+  }
+  .cred-thumb img{ width:100%; height:100%; object-fit:cover; object-position:top; }
+  .cred-body{ padding:16px 18px 18px; }
+  .cred-title{ font-size:15px; font-weight:600; margin-bottom:4px; }
+  .cred-sub{ font-size:12.5px; color:var(--ink-soft); margin-bottom:10px; }
+  .cred-link{ font-family:var(--mono); font-size:12.5px; color:var(--blush); border-bottom:1px solid var(--blush); padding-bottom:1px; }
+  @media (max-width:800px){ .cred-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ .cred-grid{ grid-template-columns:1fr; } }
+
+  /* ---------------- IMPACT NUMBERS ---------------- */
+  .impact-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:20px; }
+  .impact-item{
+    border-top:3px solid var(--blush); padding:16px 4px 0;
+    background:var(--surface); border-radius:0 0 var(--r-sm) var(--r-sm);
+  }
+  .impact-value{ font-family:var(--mono); font-size:28px; color:var(--ink); margin-bottom:6px; }
+  .impact-label{ font-size:12.5px; color:var(--ink-soft); line-height:1.4; }
+  @media (max-width:800px){ .impact-grid{ grid-template-columns:repeat(2,1fr); } }
+
+  /* ---------------- CONTACT / FOOTER ---------------- */
+  #contact{ background:var(--bg-alt); }
+  .contact-grid{ display:grid; grid-template-columns:1.1fr 1fr; gap:60px; align-items:start; }
+  .contact-links{ display:grid; gap:12px; }
+  .contact-links a{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 20px; border:1px solid var(--line); border-radius:var(--r-md);
+    background:var(--surface);
+    font-size:16px; transition:color .15s, border-color .15s, transform .15s;
+  }
+  .contact-links a span.arrow{ font-family:var(--mono); font-size:14px; color:var(--ink-soft); transition:transform .15s; }
+  .contact-links a:hover{ color:var(--blush); border-color:var(--blush); transform:translateX(2px); }
+  .contact-links a:hover span.arrow{ transform:translateX(4px); }
+
+  footer{ padding:28px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--ink-soft); font-family:var(--mono); flex-wrap:wrap; gap:8px; }
+
+  a:focus-visible, button:focus-visible{ outline:2px solid var(--blush); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="brand"><span class="mono-dot"></span><span id="brandName">VM</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#achievements">Achievements</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="nav-cta" href="#" id="cvLinkTop" download>Download CV</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME / HERO -->
+  <section id="home">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="hero-top">
+          <div class="hero-photo">
+            <div class="hero-photo-inner" id="heroPhoto"></div>
+          </div>
+          <div class="hero-eyebrow" id="heroEyebrow"></div>
+        </div>
+        <h1 class="hero-name" id="heroName"></h1>
+        <p class="hero-role" id="heroRole"></p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn primary">View Projects</a>
+          <a href="#" class="btn ghost" id="cvLinkHero" download>Download CV</a>
+          <a href="#contact" class="btn ghost">Contact Me</a>
+        </div>
+      </div>
+      <div class="signal-panel">
+        <div class="signal-panel-head">
+          <span>ZSEPulse — Signal Readout</span>
+          <span id="signalTicker">ZSE · LIVE</span>
+        </div>
+        <canvas id="signalCanvas"></canvas>
+        <div class="signal-readout">
+          <div class="signal-value">84%</div>
+          <div class="signal-label">30-day trading signal accuracy, ZSE All-Share dashboard</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-text">
+        <div class="kicker">ABOUT</div>
+        <h2 style="margin-bottom:22px;">Working where data meets real decisions.</h2>
+        <p id="aboutP1"></p>
+        <p id="aboutP2"></p>
+      </div>
+      <div class="facts" id="factsList"></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">SKILLS</div>
+        <h2>Technical foundation</h2>
+        <p>Grouped by how the work actually gets used — not a wall of logos.</p>
+      </div>
+      <div class="skills-grid" id="skillsGrid"></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">PROJECTS</div>
+        <h2>Flagship work</h2>
+        <p>Four projects, each solving a real problem in health, finance or agriculture.</p>
+      </div>
+      <div id="projectsList"></div>
+
+      <div class="other-work">
+        <h3 style="font-family:var(--mono); font-size:13px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:6px;">Other competition &amp; challenge work</h3>
+        <div id="otherWorkList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">EXPERIENCE</div>
+        <h2>Where I've worked</h2>
+      </div>
+      <div class="timeline" id="experienceTimeline"></div>
+    </div>
+  </section>
+
+  <!-- ACHIEVEMENTS -->
+  <section id="achievements">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">ACHIEVEMENTS</div>
+        <h2>Recognition</h2>
+      </div>
+      <div class="ach-grid" id="achGrid"></div>
+
+      <div style="margin-top:64px;">
+        <div class="kicker">PROFESSIONAL CERTIFICATIONS</div>
+        <div class="cert-list" id="certList"></div>
+      </div>
+
+      <div style="margin-top:64px;">
+        <div class="kicker">CREDENTIALS</div>
+        <p style="color:var(--ink-soft); max-width:56ch; margin-bottom:24px;">Academic certificates, straight from the source.</p>
+        <div class="cred-grid" id="credGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">EDUCATION</div>
+        <h2>Academic background</h2>
+      </div>
+      <div class="timeline" id="educationTimeline"></div>
+
+      <div style="margin-top:72px;">
+        <div class="kicker">IN NUMBERS</div>
+        <div class="impact-grid" id="impactGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <div class="kicker">CONTACT</div>
+        <h2 style="margin-bottom:18px;">Let's talk.</h2>
+        <p style="color:var(--ink-soft); max-width:48ch;" id="contactBlurb"></p>
+      </div>
+      <div class="contact-links" id="contactLinks"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span id="footerName"></span>
+    <span id="footerLoc"></span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG — edit everything here. The page renders itself
+   from this object, so you never need to touch the HTML/CSS
+   above to update your content.
+============================================================ */
+const CONFIG = {
+  name: "Vimbainashe Mandaza",
+  initials: "VM",
+  photo: "", // put a filename here e.g. "assets/photo.jpg" once you have a headshot; leave blank to show initials
+  tagline: "Data Science & Informatics Graduate",
+  role: "AI/ML · Health Informatics · Financial & Agricultural Analytics",
+  location: "Chinhoyi, Zimbabwe",
+  email: "mandazavimbainashe8@gmail.com",
+  phone: "0786 147 577",
+  linkedin: "https://linkedin.com/in/vimbainashe-mandaza-8402a6324",
+  github: "https://github.com/mandazavee22",
+  zindi: "https://zindi.africa/users/Mandaza",
+  cvLink: "assets/Vimbainashe-Mandaza-CV.pdf",
+
+  about: [
+    "I'm a Data Science and Informatics graduate (BSc Hons, Midlands State University) with hands-on experience turning messy, real-world data into working systems — from patient records at a provincial hospital to trading signals on the Zimbabwe Stock Exchange.",
+    "My interest is specific: applying AI and machine learning to health information systems and financial inclusion in Zimbabwe. I'm a Zindi Ambassador and compete regularly in applied ML challenges, and I'm currently open to Data Science, Data Analyst, AI/ML and ICT Graduate Trainee roles."
+  ],
+
+  facts: [
+    { label: "DEGREE", value: "BSc (Hons) Data Science & Informatics, Midlands State University — 2026 (Upper Second)" },
+    { label: "BASED IN", value: "Chinhoyi, Zimbabwe" },
+    { label: "SEEKING", value: "Data Science · Data Analyst · AI/ML · ICT Graduate Trainee roles" },
+    { label: "FOCUS", value: "Health informatics, financial analytics, agricultural AI" }
+  ],
+
+  skills: [
+    {
+      category: "Data Science & ML",
+      items: ["Python (scikit-learn)", "XGBoost", "LightGBM", "Random Forest", "Gradient Boosting", "Feature Engineering", "Model Evaluation"]
+    },
+    {
+      category: "Data Engineering & Analysis",
+      items: ["SQL", "Pandas", "NumPy", "ETL Pipelines", "Data Cleaning & Validation", "Matplotlib / Seaborn"]
+    },
+    {
+      category: "Software Development",
+      items: ["Flask", "Django", "REST APIs", "Flutter (Dart)", "HTML/CSS/JS", "Git & GitHub"]
+    },
+    {
+      category: "Domain Platforms",
+      items: ["Hospital Information Systems (HIS/EMR)", "Zindi Competitive Platform", "Java (Weka, DL4J, OpenNLP)"]
+    }
+  ],
+
+  projects: [
+    {
+      tag: "FINTECH",
+      tagColor: "var(--teal)",
+      name: "ZSEPulse",
+      period: "2026",
+      description: "An AI-assisted market analytics dashboard for the Zimbabwe Stock Exchange. Generates automated buy / sell / hold trading signals, tracks portfolio value in ZiG and USD, visualises the ZSE All-Share Index, and monitors the ZiG/USD exchange rate and inflation.",
+      tech: ["Python", "XGBoost", "LightGBM", "Flask"],
+      metric: "84% 30-day signal accuracy",
+      github: "https://github.com/mandazavee22/ZSEPulse",
+      demo: null
+    },
+    {
+      tag: "FINTECH · HACKATHON",
+      tagColor: "var(--gold)",
+      name: "HiveFund",
+      period: "2025",
+      description: "A digital platform modernising the mukando (informal rotating savings club) system practised across Zimbabwe. Lets savings groups manage contributions, track payouts and coordinate group finances digitally, removing the risks of cash-based record keeping.",
+      tech: ["Flutter", "Flask", "Team project — 5-person MSU team"],
+      metric: "3rd place — Econet E-novate Hackathon 2025",
+      github: "https://github.com/mandazavee22/HiveFund",
+      demo: null
+    },
+    {
+      tag: "HEALTH",
+      tagColor: "var(--blush)",
+      name: "Pharmaceutical Inventory Tracking System",
+      period: "2024 – 2025",
+      description: "A web-based dashboard built during industrial attachment at Chinhoyi Provincial Hospital, giving the pharmacy real-time visibility of drug and equipment stock, with automated stockout alerts, expired-item tracking and usage trend analytics.",
+      tech: ["Web dashboard", "Real-time stock tracking", "Hospital data workflows"],
+      metric: "Built for live hospital operations",
+      github: "https://github.com/mandazavee22/Pharmaceutical-Inventory-Tracking-",
+      demo: null
+    },
+    {
+      tag: "AGRICULTURE",
+      tagColor: "var(--teal)",
+      name: "FarmFeed",
+      period: "2025 – 2026",
+      description: "A Flutter/Flask mobile app for Zimbabwean livestock farmers, integrating Random Forest and XGBoost models for feed cost optimisation and animal performance prediction. Built as a dissertation project; the approach transfers directly to mHealth platforms.",
+      tech: ["Flutter", "Flask", "Random Forest", "XGBoost"],
+      metric: "Dissertation project",
+      github: "https://github.com/mandazavee22/FarmFeed",
+      demo: null
+    }
+  ],
+
+  otherWork: [
+    {
+      period: "2026",
+      name: "SeedRise AI — Innovation Challenge Proposal (Seed Co–BOOST)",
+      description: "AI-driven agricultural advisory system featuring a Farmer Success Score for credit risk, an agronomist chatbot and demand forecasting."
+    },
+    {
+      period: "2026",
+      name: "World Cup 2026 Goal Prediction — Zindi Hackathon",
+      description: "80+ feature ensemble model (Gradient Boosting, Random Forest, XGBoost, LightGBM) predicting tournament outcomes, with model stacking."
+    },
+    {
+      period: "2026",
+      name: "IndabaX Zimbabwe — Loan Default Prediction",
+      description: "Credit-risk classification model, Team Data_Data. Placed 10th of 40 teams (top 25%), Zindi-certified."
+    }
+  ],
+
+  experience: [
+    {
+      period: "2024 – 2025",
+      role: "Industrial Attachment — Data & Health Records",
+      org: "Chinhoyi Provincial Hospital, Chinhoyi",
+      points: [
+        "Managed patient health records, entering demographics, diagnoses and clinical outcomes into hospital information systems",
+        "Designed and built a Pharmaceutical Inventory Tracking System giving the pharmacy real-time stock visibility, with automated stockout alerts and expired-item tracking",
+        "Cleaned and validated health datasets to ensure data integrity",
+        "Digitised paper medical records to support clinical decision-making",
+        "Handled sensitive patient data in full compliance with health data privacy and confidentiality protocols"
+      ]
+    },
+    {
+      period: "March 2025 (1 month)",
+      role: "Data Science Intern",
+      org: "TechnoHacks Solutions Pvt. Ltd. — Remote",
+      points: [
+        "Collaborated with industry data scientists on applied ML tasks, gaining exposure to production data science workflows"
+      ]
+    }
+  ],
+
+  achievements: [
+    { mark: "3rd", title: "Econet E-novate Hackathon 2025", detail: "HiveFund — representing Midlands State University, 5-person team" },
+    { mark: "TOP 25%", title: "IndabaX Zimbabwe 2026 Hackathon", detail: "Ranked 10th of 40 teams, Zindi-certified — loan default prediction" },
+    { mark: "AMB.", title: "Zindi Ambassador — Zimbabwe", detail: "Representing Zindi within the local data science community" }
+  ],
+
+  certifications: [
+    { name: "Associate Data Engineer in SQL", date: "Jan 2025" },
+    { name: "AI Fundamentals", date: "Feb 2025" },
+    { name: "Data Analysis — Women Techsters Launchpad Program", date: "Mar 2025" }
+  ],
+
+  credentials: [
+    { title: "BSc (Hons) Data Science & Informatics", sub: "Midlands State University · Upper Second · 2026", image: "assets/certificate-degree.jpg" },
+    { title: "GCE Advanced Level", sub: "Nemakonde High School · 2021", image: "assets/certificate-alevel.jpg" },
+    { title: "GCE Ordinary Level", sub: "Nemakonde High School · 2019", image: "assets/certificate-olevel.jpg" }
+  ],
+
+  education: [
+    {
+      period: "Graduated 2026",
+      role: "BSc (Hons) Data Science and Informatics — Upper Second",
+      org: "Midlands State University, Gweru",
+      points: ["Key modules: Machine Learning I & II (Java), Database Systems, Health Informatics, Statistical Modelling, Data Mining"]
+    },
+    {
+      period: "November 2021",
+      role: "Zimbabwe GCE Advanced Level",
+      org: "Nemakonde High School, Chinhoyi",
+      points: ["3 A-Level passes: Accounting, Pure Mathematics, Business Studies"]
+    },
+    {
+      period: "November 2019",
+      role: "Zimbabwe GCE Ordinary Level",
+      org: "Nemakonde High School, Chinhoyi",
+      points: ["8 O-Level passes"]
+    }
+  ],
+
+  impact: [
+    { value: "4+", label: "Flagship projects shipped" },
+    { value: "84%", label: "ZSEPulse 30-day signal accuracy" },
+    { value: "3rd", label: "Econet Hackathon 2025 placement" },
+    { value: "10/40", label: "IndabaX Zimbabwe ranking" },
+    { value: "2026", label: "Data Science & Informatics graduate" }
+  ],
+
+  contactBlurb: "I'm open to opportunities in Data Science, Data Analytics, AI/ML and ICT. If any of the work above is relevant to something you're building, I'd like to hear from you."
+};
+
+/* ============================================================
+   RENDER — reads CONFIG and builds the page. No need to edit
+   below this line for normal content updates.
+============================================================ */
+function el(tag, attrs = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "html") node.innerHTML = v;
+    else if (k === "class") node.className = v;
+    else node.setAttribute(k, v);
+  }
+  (Array.isArray(children) ? children : [children]).forEach(c => {
+    if (c) node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+  });
+  return node;
+}
+
+// Header / hero / brand
+document.getElementById("brandName").textContent = CONFIG.initials;
+document.getElementById("footerName").textContent = "© " + new Date().getFullYear() + " " + CONFIG.name;
+document.getElementById("footerLoc").textContent = CONFIG.location;
+document.getElementById("heroEyebrow").textContent = CONFIG.tagline.toUpperCase() + " · ZINDI AMBASSADOR";
+document.getElementById("heroName").textContent = CONFIG.name;
+document.getElementById("heroRole").textContent = CONFIG.role + ". Based in " + CONFIG.location + ".";
+[document.getElementById("cvLinkTop"), document.getElementById("cvLinkHero")].forEach(a => a.href = CONFIG.cvLink);
+
+const heroPhoto = document.getElementById("heroPhoto");
+if (CONFIG.photo) {
+  heroPhoto.appendChild(el("img", { src: CONFIG.photo, alt: CONFIG.name }));
+} else {
+  heroPhoto.textContent = CONFIG.initials;
+}
+
+// About
+document.getElementById("aboutP1").textContent = CONFIG.about[0];
+document.getElementById("aboutP2").textContent = CONFIG.about[1];
+const factsList = document.getElementById("factsList");
+CONFIG.facts.forEach(f => {
+  factsList.appendChild(el("dl", {}, [
+    el("dt", {}, f.label),
+    el("dd", {}, f.value)
+  ]));
+});
+
+// Skills
+const skillsGrid = document.getElementById("skillsGrid");
+CONFIG.skills.forEach(block => {
+  skillsGrid.appendChild(el("div", { class: "skill-block" }, [
+    el("h3", {}, block.category),
+    el("div", { class: "chip-row" }, block.items.map(i => el("span", { class: "chip" }, i)))
+  ]));
+});
+
+// Projects
+const projectsList = document.getElementById("projectsList");
+CONFIG.projects.forEach(p => {
+  const links = [];
+  if (p.github) links.push(el("a", { href: p.github, target: "_blank", rel: "noopener" }, "GitHub →"));
+  if (p.demo) links.push(el("a", { href: p.demo, target: "_blank", rel: "noopener" }, "Live Demo →"));
+
+  projectsList.appendChild(el("div", { class: "project-row" }, [
+    el("div", { class: "project-meta" }, p.period),
+    el("div", {}, [
+      el("span", { class: "tag", style: `background:${p.tagColor}` }, p.tag),
+      el("h3", { class: "project-title" }, p.name),
+      el("p", { class: "project-desc" }, p.description),
+      el("div", { class: "project-tech" }, p.tech.map(t => el("span", {}, t))),
+      el("div", { class: "project-metric" }, "▸ " + p.metric),
+      el("div", { class: "project-links" }, links)
+    ])
+  ]));
+});
+
+const otherWorkList = document.getElementById("otherWorkList");
+CONFIG.otherWork.forEach(o => {
+  otherWorkList.appendChild(el("div", { class: "other-work-item" }, [
+    el("div", { class: "ow-period" }, o.period),
+    el("div", {}, [
+      el("div", { class: "ow-name" }, o.name),
+      el("div", { class: "ow-desc" }, o.description)
+    ])
+  ]));
+});
+
+// Timelines
+function renderTimeline(containerId, items) {
+  const container = document.getElementById(containerId);
+  items.forEach((item, i) => {
+    container.appendChild(el("div", { class: "tl-item" }, [
+      el("div", { class: "tl-num" }, String(i + 1).padStart(2, "0")),
+      el("div", { class: "tl-period" }, item.period),
+      el("div", { class: "tl-role" }, item.role),
+      el("div", { class: "tl-org" }, item.org),
+      el("ul", { class: "tl-points" }, item.points.map(pt => el("li", {}, pt)))
+    ]));
+  });
+}
+renderTimeline("experienceTimeline", CONFIG.experience);
+renderTimeline("educationTimeline", CONFIG.education);
+
+// Achievements + certifications
+const achGrid = document.getElementById("achGrid");
+CONFIG.achievements.forEach(a => {
+  achGrid.appendChild(el("div", { class: "ach-card" }, [
+    el("div", { class: "ach-mark" }, a.mark),
+    el("div", { class: "ach-title" }, a.title),
+    el("div", { class: "ach-detail" }, a.detail)
+  ]));
+});
+
+const certList = document.getElementById("certList");
+CONFIG.certifications.forEach(c => {
+  certList.appendChild(el("div", { class: "cert-row" }, [
+    el("span", {}, c.name),
+    el("span", { class: "cert-date" }, c.date)
+  ]));
+});
+
+// Credentials gallery (real certificate photos)
+const credGrid = document.getElementById("credGrid");
+CONFIG.credentials.forEach(c => {
+  credGrid.appendChild(el("a", { class: "cred-card", href: c.image, target: "_blank", rel: "noopener" }, [
+    el("div", { class: "cred-thumb" }, [ el("img", { src: c.image, alt: c.title, loading: "lazy" }) ]),
+    el("div", { class: "cred-body" }, [
+      el("div", { class: "cred-title" }, c.title),
+      el("div", { class: "cred-sub" }, c.sub),
+      el("span", { class: "cred-link" }, "View full certificate ↗")
+    ])
+  ]));
+});
+
+// Impact numbers
+const impactGrid = document.getElementById("impactGrid");
+CONFIG.impact.forEach(i => {
+  impactGrid.appendChild(el("div", { class: "impact-item" }, [
+    el("div", { class: "impact-value" }, i.value),
+    el("div", { class: "impact-label" }, i.label)
+  ]));
+});
+
+// Contact
+document.getElementById("contactBlurb").textContent = CONFIG.contactBlurb;
+const contactLinks = document.getElementById("contactLinks");
+const contacts = [
+  { label: "Email — " + CONFIG.email, href: "mailto:" + CONFIG.email },
+  { label: "Phone — " + CONFIG.phone, href: "tel:" + CONFIG.phone.replace(/\s/g, "") },
+  { label: "LinkedIn", href: CONFIG.linkedin },
+  { label: "GitHub", href: CONFIG.github },
+  { label: "Zindi Profile", href: CONFIG.zindi }
+];
+contacts.forEach(c => {
+  contactLinks.appendChild(el("a", { href: c.href, target: c.href.startsWith("http") ? "_blank" : "_self", rel: "noopener" }, [
+    el("span", {}, c.label),
+    el("span", { class: "arrow" }, "→")
+  ]));
+});
+
+/* ============================================================
+   INTERACTIONS: mobile nav, scroll-spy, signal canvas animation
+============================================================ */
+const navToggle = document.getElementById("navToggle");
+const navLinksEl = document.getElementById("navLinks");
+navToggle.addEventListener("click", () => navLinksEl.classList.toggle("open"));
+navLinksEl.querySelectorAll("a").forEach(a => a.addEventListener("click", () => navLinksEl.classList.remove("open")));
+
+// Scroll-spy
+const sections = document.querySelectorAll("main section[id]");
+const navAnchors = document.querySelectorAll(".nav-links a");
+const spyObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navAnchors.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + entry.target.id));
+    }
+  });
+}, { rootMargin: "-45% 0px -50% 0px" });
+sections.forEach(s => spyObserver.observe(s));
+
+// Signal canvas — animated "trading signal" line, respects reduced motion
+(function () {
+  const canvas = document.getElementById("signalCanvas");
+  const ctx = canvas.getContext("2d");
+  const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let w, h, t = 0;
+
+  function resize() {
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * devicePixelRatio;
+    canvas.height = rect.height * devicePixelRatio;
+    ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    w = rect.width; h = rect.height;
+  }
+  window.addEventListener("resize", resize);
+  resize();
+
+  function noise(x) {
+    return Math.sin(x * 0.7) * 0.5 + Math.sin(x * 1.9 + 1.2) * 0.3 + Math.sin(x * 3.3 + 2.1) * 0.15;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+
+    ctx.strokeStyle = "rgba(36,30,31,0.08)";
+    ctx.lineWidth = 1;
+    for (let gy = 0; gy <= h; gy += h / 3) {
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(w, gy); ctx.stroke();
+    }
+
+    ctx.beginPath();
+    ctx.strokeStyle = "#2F5D50";
+    ctx.lineWidth = 1.8;
+    const points = 80;
+    for (let i = 0; i <= points; i++) {
+      const x = (i / points) * w;
+      const phase = prefersReduced ? 0 : t;
+      const y = h / 2 - noise(i * 0.35 + phase) * (h * 0.34);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    if (!prefersReduced) {
+      const mx = w - 4;
+      const my = h / 2 - noise(points * 0.35 + t) * (h * 0.34);
+      ctx.beginPath();
+      ctx.fillStyle = "#BE8C42";
+      ctx.arc(mx, my, 3.2, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    if (!prefersReduced) {
+      t += 0.02;
+      requestAnimationFrame(draw);
+    }
+  }
+  draw();
+})();
+</script>
+</body>
+</html>
